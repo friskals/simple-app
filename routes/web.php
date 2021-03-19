@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\OccupationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +25,8 @@ Route::get('/', function () {
 // })->name('dashboard');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'dasboard'])->name('dashboard');
+Route::post('signin', [AuthController::class, 'signin']);
+Route::post('register', [AuthController::class, 'signup']);
+Route::middleware('auth:api')->group(function () {
+    Route::resource('occupation', OccupationController::class);
+});
